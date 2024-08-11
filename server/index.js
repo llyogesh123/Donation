@@ -1,0 +1,55 @@
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const Stripe = require('stripe');
+const cors = require("cors");
+const connection = require("./db");
+const userRoutes = require("./routes/users");
+const authRoutes = require("./routes/auth");
+const fundraisingRoutes = require("./routes/fundraising")
+const Payment = require('./models/Payment');
+
+// database connection
+connection();
+
+// middlewares
+app.use(express.json());
+app.use(cors());
+
+const stripe = Stripe('sk_test_51PmbwKP0k30ENs6hPvtxFMMAyu5QfQdu0rzgo8n0xZFUDd4ScSuswN7y5piCf6VRbSnKJGNh4k5pEHx4yD4Io3qn0049yCLpPM');
+
+// routes
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/fundraising",fundraisingRoutes);
+
+app.post('/api/create-payment-intent', async (req, res) => {
+    const { paymentMethodId, amount } = req.body;
+  
+    try {
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount,
+          currency: 'usd',
+          payment_method: paymentMethodId,
+          automatic_payment_methods: {
+            enabled: true,
+            allow_redirects: 'never',
+          },
+        });
+    
+        const payment = new Payment({
+          paymentMethodId,
+          amount,
+          clientSecret: paymentIntent.client_secret,
+        });
+    
+        await payment.save();
+  
+      res.send({ client_secret: paymentIntent.client_secret });
+    } catch (error) {
+      res.send({ error: error.message });
+    }
+  });
+
+const port = process.env.PORT || 8080;
+app.listen(port, console.log(`Listening on port ${port}...`));
