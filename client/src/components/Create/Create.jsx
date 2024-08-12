@@ -1,16 +1,17 @@
-import  { useState } from 'react';
-import './Create.css';
-
+import { useState } from 'react';
+import axios from 'axios';
+import './Create.css'
 
 const Create = () => {
   const [formData, setFormData] = useState({
     name: '',
     image: '',
     price: '',
-    description: ''
+    description: '',
+    contactNumber: '' // Add contactNumber to the state
   });
 
-  const [message, setMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,33 +24,20 @@ const Create = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/fundraising/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        setMessage('Fundraising page created successfully!');
-      } else {
-        setMessage(result.message || 'Failed to create fundraising page');
-      }
-    // eslint-disable-next-line no-unused-vars
+      const response = await axios.post('http://localhost:8080/api/fundraising/create', formData);
+      console.log(response.data);
+      setSuccessMessage('Successfully created!');
     } catch (error) {
-      setMessage('Server error. Please try again later.');
+      console.error('There was an error creating the fundraising page!', error);
     }
   };
 
   return (
-    <div className="create-container">
-      <h1>Create a Fundraising Page</h1>
-      {message && <p className="message">{message}</p>}
+    <div className="create-form">
+      {successMessage && <div className="success-message">{successMessage}</div>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Organization Name</label>
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             id="name"
@@ -90,6 +78,17 @@ const Create = () => {
             onChange={handleChange}
             required
           ></textarea>
+        </div>
+        <div className="form-group">
+          <label htmlFor="contactNumber">Contact Number</label>
+          <input
+            type="text"
+            id="contactNumber"
+            name="contactNumber"
+            value={formData.contactNumber}
+            onChange={handleChange}
+            required
+          />
         </div>
         <button type="submit" className="donate-button">Create Fundraising Page</button>
       </form>

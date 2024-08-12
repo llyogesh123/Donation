@@ -13,14 +13,14 @@ const Login = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		try {
+		try { 
 			const url = "http://localhost:8080/api/auth";
 			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("token", res.data);
+			localStorage.setItem("token", res.data);       
 			window.location = "/";
 		} catch (error) {
 			if (
-				error.response &&
+				error.response &&  
 				error.response.status >= 400 &&
 				error.response.status <= 500
 			) {
@@ -34,13 +34,13 @@ const Login = () => {
 			<div className={styles.login_form_container}>
 				<div className={styles.left}>
 					<form className={styles.form_container} onSubmit={handleSubmit}>
-						<h1>Login to Your Account</h1>
+						<h1>Care to Donate</h1>
 						<input
 							type="email"
 							placeholder="Email"
 							name="email"
-							onChange={handleChange}
-							value={data.email}
+							onChange={handleChange} 
+							value={data.email} 
 							required
 							className={styles.input}
 						/>
@@ -70,6 +70,6 @@ const Login = () => {
 			</div>
 		</div>
 	);
-};
+};           
 
 export default Login;

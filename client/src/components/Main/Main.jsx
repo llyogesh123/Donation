@@ -39,8 +39,8 @@ const Main = () => {
 	return (
 		<div className={styles.main_container}>
 			<nav className={styles.navbar}>
-				<h1>Fund Donate</h1>
-				<h1>Home</h1>
+				<h1>Donate</h1>
+				<h1><Link to="/history">History</Link></h1>
 				<h1><Link to="/about" className="no-underline">About Us</Link></h1>
 				<h1><Link to="/create">Create</Link></h1>
 				<button className={styles.white_btn} onClick={handleLogout}>
@@ -55,6 +55,7 @@ const Main = () => {
             <h3>{fundraising.name}</h3>
             <img src={fundraising.image} alt={fundraising.name} />
             <p>Price: ${fundraising.price}</p>
+			<p>Contact:{fundraising.contactNumber}</p>
             <p>{fundraising.description}</p>
 			<button className="button"><Link to="/donate">Donate</Link></button>
           </div>

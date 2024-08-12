@@ -3,10 +3,10 @@ const Fundraising = require('../models/Fundraising');
 // Controller to handle the creation of a fundraising page
 exports.createFundraising = async (req, res) => {
   try {
-    const { name, image, price, description } = req.body;
+    const { name, image, price, description, contactNumber } = req.body;
 
     // Validate input
-    if (!name || !image || !price || !description) {
+    if (!name || !image || !price || !description || !contactNumber) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -15,7 +15,8 @@ exports.createFundraising = async (req, res) => {
       name,
       image,
       price,
-      description
+      description,
+      contactNumber
     });
 
     await newFundraising.save();

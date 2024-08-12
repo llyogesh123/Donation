@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import './Donate.css'; // Import the CSS file
+import axios from 'axios';
 
 const stripePromise = loadStripe('pk_test_51PmbwKP0k30ENs6hNn2xE69FcvTXstfzIi8D12zSyFQRZjdxwEfRFUqmHdDDhcZ3HKJdT3QAAjR6t1DU6BADykdy0008sn4Adv');
 
@@ -9,6 +10,7 @@ const DonateForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [amount, setAmount] = useState('');
+  const [toWhom, setToWhom] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -19,53 +21,45 @@ const DonateForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    setError(null);
+  
     if (!stripe || !elements) {
+      setLoading(false);
       return;
     }
-
+  
+    const cardElement = elements.getElement(CardElement);
+  
     try {
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: elements.getElement(CardElement),
+      const response = await axios.post('http://localhost:8080/api/create-payment-intent', {
+        paymentMethodId: cardElement.id,
+        amount,
+        name,
+        email,
+        toWhom,
       });
-
-      if (error) {
-        setError(error.message);
-        setLoading(false);
-        return;
-      }
-
-      const response = await fetch('http://localhost:8080/api/create-payment-intent', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+  
+      const { client_secret } = response.data;
+  
+      const paymentResult = await stripe.confirmCardPayment(client_secret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            name,
+            email,
+          },
         },
-        body: JSON.stringify({ paymentMethodId: paymentMethod.id, amount: parseInt(amount) * 100 }),
       });
-
-      const paymentIntentResponse = await response.json();
-
-      if (paymentIntentResponse.error) {
-        setError(paymentIntentResponse.error);
+  
+      if (paymentResult.error) {
+        setError(paymentResult.error.message);
         setLoading(false);
-        return;
-      }
-
-      const { client_secret } = paymentIntentResponse;
-
-      const { error: confirmError } = await stripe.confirmCardPayment(client_secret);
-
-      if (confirmError) {
-        setError(confirmError.message);
+      } else {
+        setSuccess(true);
         setLoading(false);
-        return;
       }
-
-      setSuccess(true);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
+    } catch (error) {
+      setError(error.message);
       setLoading(false);
     }
   };
@@ -91,6 +85,13 @@ const DonateForm = () => {
         placeholder="Amount"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
+        className="donate-input"
+      />
+       <input
+        type="text"
+        placeholder="To Whom"
+        value={toWhom}
+        onChange={(e) => setToWhom(e.target.value)}
         className="donate-input"
       />
       <CardElement className="donate-card-element" />

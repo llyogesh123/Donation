@@ -24,32 +24,43 @@ app.use("/api/auth", authRoutes);
 app.use("/api/fundraising",fundraisingRoutes);
 
 app.post('/api/create-payment-intent', async (req, res) => {
-    const { paymentMethodId, amount } = req.body;
-  
-    try {
-        const paymentIntent = await stripe.paymentIntents.create({
-          amount,
-          currency: 'usd',
-          payment_method: paymentMethodId,
-          automatic_payment_methods: {
-            enabled: true,
-            allow_redirects: 'never',
-          },
-        });
-    
-        const payment = new Payment({
-          paymentMethodId,
-          amount,
-          clientSecret: paymentIntent.client_secret,
-        });
-    
-        await payment.save();
-  
-      res.send({ client_secret: paymentIntent.client_secret });
-    } catch (error) {
-      res.send({ error: error.message });
-    }
-  });
+  const { paymentMethodId, amount, name, email, toWhom } = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: 'usd',
+      payment_method: paymentMethodId,
+      automatic_payment_methods: {
+        enabled: true,
+        allow_redirects: 'never',
+      },
+    });
+
+    const payment = new Payment({
+      name,
+      amount,
+      email,
+      toWhom,
+      clientSecret: paymentIntent.client_secret,
+    });
+
+    await payment.save();
+
+    res.send({ client_secret: paymentIntent.client_secret });
+  } catch (error) {
+    res.send({ error: error.message });
+  }
+});
+
+app.get('/payments', async (req, res) => {
+  try {
+    const payments = await Payment.find();
+    res.status(200).json(payments);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));

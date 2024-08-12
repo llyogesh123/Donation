@@ -1,8 +1,7 @@
-// models/Payment.js
 const mongoose = require('mongoose');
 
 const PaymentSchema = new mongoose.Schema({
-  paymentMethodId: {
+  name: {
     type: String,
     required: true,
   },
@@ -10,7 +9,11 @@ const PaymentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  clientSecret: {
+  email: {
+    type: String,
+    required: true,
+  },
+  toWhom: {
     type: String,
     required: true,
   },
