@@ -8,9 +8,12 @@ const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const fundraisingRoutes = require("./routes/fundraising")
 const Payment = require('./models/Payment');
+const mongoose = require('mongoose');
 
 // database connection
 connection();
+
+mongoose.set('strictQuery', true);
 
 // middlewares
 app.use(express.json());
