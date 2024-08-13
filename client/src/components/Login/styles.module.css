@@ -1,3 +1,16 @@
+.login-background {
+  background-image: url('https://i.stack.imgur.com/TEBeF.gif');
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff; /* White text color for contrast */
+}
+
+
+
 /* Container for the entire login page */
 .login_container {
     width: 100%;
@@ -37,6 +50,8 @@
     color: white;
     text-align: center;
   }
+
+
   
   /* Right section of the form */
   .right {
@@ -121,3 +136,4 @@
     background-color: #9b6bcc;
   }
   
+ 

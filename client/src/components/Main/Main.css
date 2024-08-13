@@ -2,9 +2,10 @@
 
 /* Main Container */
 .main-container {
+    min-height: 100vh;
     padding: 20px;
     text-align: center;
-    background-color: black;
+    background-color: #1a1a1a;
     font-family: 'Poppins', sans-serif;
   }
   
@@ -67,7 +68,7 @@
   /* Button Hover Effect */
   .button:hover {
     background-color: #673ab7;
-    color: #ffeb3b;
+    color: #ff3ba3;
   }
   
   /* Card Hover Effect */
@@ -75,6 +76,18 @@
     transform: translateY(-5px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   }
+
+  .background {
+    background-image: url('https://media.tenor.com/f0cKyHniahEAAAAd/background-khaoticfuture.gif');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh; /* Full viewport height or more if needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff; /* White text color for contrast */
+}
+
   
   /* Media Query for Responsive Design */
   @media (max-width: 768px) {
@@ -89,3 +102,33 @@
     }
   }
   
+  h1 {
+    font-size: 2em;
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  h1 a {
+    color: #fff; /* White color for dark mode */
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  h1 a:hover {
+    color: #007bff; /* Blue color on hover */
+  }
+  
+  .no-underline {
+    text-decoration: none;
+  }
+
+  .logo1 {
+    height: 60px; /* Adjust the height as needed */
+    width: auto; /* Maintain aspect ratio */
+}
+
+.main-logo1 {
+    height: 120px; /* Adjust the height as needed */
+    width: auto; /* Maintain aspect ratio */
+    margin-bottom: 20px; /* Add some space below the logo */
+}

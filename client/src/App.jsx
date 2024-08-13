@@ -7,22 +7,25 @@ import Create from './components/Create/Create';
 import Donate from './components/Donate/Donate';
 import History from './components/History/History';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-    const user = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     return (
         <Router>
+             <ToastContainer />
             <Routes>
-                {user && <Route path="/" exact element={<Main />} />}
+                {token && <Route path="/" exact element={<Main />} />}
                 <Route path="/signup" exact element={<Signup />} />
                 <Route path="/login" exact element={<Login />} />
                 <Route path="/main" element={<ProtectedRoute component={Main} />} />
                 <Route path="/" element={<Navigate replace to="/login" />} />
-                <Route path="/about" exact element={<About />} />
-                <Route path="/create" exact element={<Create />} />
-                <Route path="/donate" exact element={<Donate />} />
-                <Route path="/history" exact element={<History />} />
+                <Route path="/about" exact element={token ?<About /> : <Navigate to="/login"/>} />
+                <Route path="/create" exact element={token ?<Create /> : <Navigate to="/login"/>} />
+                <Route path="/donate" exact element={token ? <Donate /> : <Navigate to="/login" /> } />
+                <Route path="/history" exact element={token ? <History /> : <Navigate to="/login" /> } />
             </Routes>
         </Router>
     );

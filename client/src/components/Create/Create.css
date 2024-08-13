@@ -1,57 +1,61 @@
 body {
-    background-color: #121212;
-    color: #e0e0e0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .create-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #444;
-    border-radius: 10px;
-    background-color: #333;
-    color: #fff;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #ddd;
-  }
-  
-  .form-group input,
-  .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    box-sizing: border-box;
-    background-color: #444;
-    color: #fff;
-  }
-  
-  .form-group textarea {
-    resize: vertical;
-  }
-  
-  .donate-button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .donate-button:hover {
-    background-color: #0056b3;
-  }
+  width: 600px; /* Adjust this value for a wider form */
+  max-width: 100%; /* Ensure it doesn't exceed the viewport width */
+  padding: 30px;
+  border: 1px solid #444;
+  border-radius: 10px;
+  background-color: #333;
+  color: #fff;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #444;
+  color: #fff;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.donate-button {
+  display: inline-block;
+  width: 100%; /* Make the button full-width */
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.donate-button:hover {
+  background-color: #0056b3;
+}

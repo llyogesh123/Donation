@@ -2,6 +2,10 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
+import logo from '../img/fund_logo3.png';
+import './Logo.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 	const [data, setData] = useState({ email: "", password: "" });
@@ -27,14 +31,18 @@ const Login = () => {
 				setError(error.response.data.message);
 			}
 		}
+		toast.error("Login failed")
 	};
+	
 
 	return (
+		<div className="login-background">
+			<ToastContainer />
 		<div className={styles.login_container}>
 			<div className={styles.login_form_container}>
 				<div className={styles.left}>
 					<form className={styles.form_container} onSubmit={handleSubmit}>
-						<h1>Care to Donate</h1>
+					<img src={logo} alt="Logo" className="logo" />
 						<input
 							type="email"
 							placeholder="Email"
@@ -68,6 +76,7 @@ const Login = () => {
 					</Link>
 				</div>
 			</div>
+		</div>
 		</div>
 	);
 };           
