@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "chmod +x ./node_modules/.bin/nodemon",
-    "dev": "nodemon server.js"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +17,7 @@
     "express": "^4.17.2",
     "joi": "^17.13.3",
     "joi-password-complexity": "^5.2.0",
-    "jsonwebtoken": "^9.0.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.2",
     "nodemon": "^2.0.15",
     "stripe": "^16.7.0"

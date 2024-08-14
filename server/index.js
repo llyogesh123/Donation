@@ -13,11 +13,13 @@ const mongoose = require('mongoose');
 // database connection
 connection();
 
-mongoose.set('strictQuery', true);
+
 
 // middlewares
 app.use(express.json());
 app.use(cors());
+
+mongoose.set('strictQuery', true);
 
 const stripe = Stripe('sk_test_51PmbwKP0k30ENs6hPvtxFMMAyu5QfQdu0rzgo8n0xZFUDd4ScSuswN7y5piCf6VRbSnKJGNh4k5pEHx4yD4Io3qn0049yCLpPM');
 
