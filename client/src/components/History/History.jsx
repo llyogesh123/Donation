@@ -12,7 +12,7 @@ const History = () => {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/payments');
+        const response = await axios.get('https://donation-7.onrender.com/payments');
         setPayments(response.data);
         setLoading(false);
       } catch (error) {

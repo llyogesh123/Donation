@@ -24,7 +24,7 @@ const Create = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/fundraising/create', formData);
+      const response = await axios.post('https://donation-7.onrender.com/create', formData);
       console.log(response.data);
       setSuccessMessage('Successfully created!');
     } catch (error) {

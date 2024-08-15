@@ -31,7 +31,7 @@ const DonateForm = () => {
     const cardElement = elements.getElement(CardElement);
   
     try {
-      const response = await axios.post('http://localhost:8080/api/create-payment-intent', {
+      const response = await axios.post('https://donation-7.onrender.com/api/create-payment-intent', {
         paymentMethodId: cardElement.id,
         amount,
         name,

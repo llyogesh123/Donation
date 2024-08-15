@@ -13,7 +13,7 @@ const Main = () => {
 	useEffect(() => {
 	  const fetchFundraisings = async () => {
 		try {
-		  const response = await axios.get('http://localhost:8080/api/fundraising/fundraising');
+		  const response = await axios.get('https://donation-7.onrender.com/api/fundraising/fundraising');
 		  setFundraisings(response.data);
 		  setLoading(false);
 		} catch (err) {
