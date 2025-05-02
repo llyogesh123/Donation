@@ -15,10 +15,16 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v3
       with:
-        node-version: '18'  # or whatever version you're using
+        node-version: '18'  # Ensure this matches your Node.js version
 
     - name: Install dependencies
+      working-directory: client
       run: npm install
 
     - name: Run Tests
-      run: npm test || echo "No tests found"  # Just to prevent breaking if no tests exist
+      working-directory: client
+      run: npm test || echo "No tests found"  # Prevents breaking if no tests exist
+
+    - name: Build Project
+      working-directory: client
+      run: npm run build
